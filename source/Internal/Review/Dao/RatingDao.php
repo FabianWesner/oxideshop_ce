@@ -139,30 +139,10 @@ class RatingDao implements RatingDaoInterface
         $ratings = new ArrayCollection();
 
         foreach ($ratingsData as $ratingData) {
-            $ratings->add($this->mapRating($ratingData));
+            $rating = new Rating();
+            $ratings->add($this->mapper->map($rating, $ratingData));
         }
 
         return $ratings;
-    }
-
-    /**
-     * Maps data from database to Rating.
-     *
-     * @param array $ratingData
-     *
-     * @return Rating
-     */
-    private function mapRating($ratingData)
-    {
-        $rating = new Rating();
-        $rating
-            ->setId($ratingData['OXID'])
-            ->setRating($ratingData['OXRATING'])
-            ->setObjectId($ratingData['OXOBJECTID'])
-            ->setUserId($ratingData['OXUSERID'])
-            ->setType($ratingData['OXTYPE'])
-            ->setCreatedAt($ratingData['OXTIMESTAMP']);
-
-        return $rating;
     }
 }
